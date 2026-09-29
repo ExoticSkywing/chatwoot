@@ -29,6 +29,8 @@ x-base: &base
     - ./enterprise/app/helpers/captain/chat_helper.rb:/app/enterprise/app/helpers/captain/chat_helper.rb:ro
     - ./enterprise/app/services/captain/llm/translate_query_service.rb:/app/enterprise/app/services/captain/llm/translate_query_service.rb:ro
     - ./enterprise/app/services/captain/open_ai_message_builder_service.rb:/app/enterprise/app/services/captain/open_ai_message_builder_service.rb:ro
+    - ./lib/chatwoot_app.rb:/app/lib/chatwoot_app.rb:ro
+    - ./lib/chatwoot_hub.rb:/app/lib/chatwoot_hub.rb:ro
   network_mode: host
 
 services:
