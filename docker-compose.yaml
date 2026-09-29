@@ -3,7 +3,6 @@ x-base: &base
   env_file: .env
   volumes:
     - storage_data:/app/storage
-    - ./app/views/widgets/show.html.erb:/app/app/views/widgets/show.html.erb:ro
     - ./vendor/db:/app/vendor/db
   network_mode: host
 
