@@ -4,6 +4,12 @@ x-base: &base
   volumes:
     - storage_data:/app/storage
     - ./vendor/db:/app/vendor/db
+    - ./patches/vite/assets/typing-BSHE76c6.js:/app/public/vite/assets/typing-BSHE76c6.js:ro
+    - ./patches/vite/assets/typing-v2.js:/app/public/vite/assets/typing-v2.js:ro
+    - ./patches/vite/assets/utils.esm-qHqIGgqd.js:/app/public/vite/assets/utils.esm-qHqIGgqd.js:ro
+    - ./patches/vite/assets/Messages-v2.js:/app/public/vite/assets/Messages-v2.js:ro
+    - ./patches/vite/assets/widget-v2.js:/app/public/vite/assets/widget-v2.js:ro
+    - ./patches/vite/.vite/manifest.json:/app/public/vite/.vite/manifest.json:ro
   network_mode: host
 
 services:
