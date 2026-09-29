@@ -26,6 +26,8 @@ x-base: &base
     - ./lib/llm/feature_router.rb:/app/lib/llm/feature_router.rb:ro
     - ./lib/captain/base_task_service.rb:/app/lib/captain/base_task_service.rb:ro
     - ./enterprise/app/models/concerns/agentable.rb:/app/enterprise/app/models/concerns/agentable.rb:ro
+    - ./enterprise/app/helpers/captain/chat_helper.rb:/app/enterprise/app/helpers/captain/chat_helper.rb:ro
+    - ./enterprise/app/services/captain/llm/translate_query_service.rb:/app/enterprise/app/services/captain/llm/translate_query_service.rb:ro
   network_mode: host
 
 services:
@@ -37,7 +39,7 @@ services:
       - RAILS_ENV=production
       - INSTALLATION_ENV=docker
       - PORT=3150
-      - RACK_TIMEOUT_SERVICE_TIMEOUT=60
+      - RACK_TIMEOUT_SERVICE_TIMEOUT=120
     entrypoint: docker/entrypoints/rails.sh
     command: ['bundle', 'exec', 'rails', 's', '-p', '3150', '-b', '0.0.0.0']
     restart: always

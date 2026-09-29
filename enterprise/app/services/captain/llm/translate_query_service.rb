@@ -35,10 +35,13 @@ class Captain::Llm::TranslateQueryService < Captain::BaseTaskService
   end
 
   def query_in_target_language?(query)
+    lang_code = account_language_code
+    return true if lang_code == 'zh' && query =~ /\p{Han}/
+
     detector = CLD3::NNetLanguageIdentifier.new(0, 1000)
     result = detector.find_language(query)
 
-    result.reliable? && result.language == account_language_code
+    result.reliable? && result.language.to_s == lang_code
   rescue StandardError
     false
   end

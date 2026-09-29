@@ -3,6 +3,8 @@ module Captain::ChatHelper
   include Captain::ChatResponseHelper
   include Captain::ChatGenerationRecorder
 
+  MAX_TOOL_CALLS = 2
+
   def request_chat_completion
     log_chat_completion_request
     chat = build_chat
@@ -45,13 +47,14 @@ module Captain::ChatHelper
   end
 
   def setup_event_handlers(chat)
+    @tool_call_count = 0
     # NOTE: We only use on_end_message to record the generation with token counts.
     # RubyLLM callbacks fire after chunks arrive, not around the API call, so
     # span timing won't reflect actual API latency. But Langfuse calculates costs
     # from model + token counts, so this is sufficient for cost tracking.
     chat.on_end_message { |message| record_llm_generation(chat, message) }
     chat.on_tool_call { |tool_call| handle_tool_call(tool_call) }
-    chat.on_tool_result { |result| handle_tool_result(result) }
+    chat.on_tool_result { |result| handle_tool_result(result, chat) }
     chat
   end
 
@@ -61,9 +64,15 @@ module Captain::ChatHelper
     (@pending_tool_calls ||= []).push(tool_call)
   end
 
-  def handle_tool_result(result)
+  def handle_tool_result(result, chat = nil)
     end_tool_span(result)
     persist_tool_completion
+
+    @tool_call_count = (@tool_call_count || 0) + 1
+    if chat && @tool_call_count >= MAX_TOOL_CALLS
+      Rails.logger.info { "Max tool calls limit (#{MAX_TOOL_CALLS}) reached, clearing tools to force final answer" }
+      chat.tools.clear
+    end
   end
 
   def add_messages_to_chat(chat)
