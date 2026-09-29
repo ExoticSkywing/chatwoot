@@ -10,6 +10,13 @@ x-base: &base
     - ./patches/vite/assets/Messages-v2.js:/app/public/vite/assets/Messages-v2.js:ro
     - ./patches/vite/assets/widget-v2.js:/app/public/vite/assets/widget-v2.js:ro
     - ./patches/vite/.vite/manifest.json:/app/public/vite/.vite/manifest.json:ro
+    - ./patches/packs/js/sdk.js:/app/public/packs/js/sdk.js:ro
+    - ./patches/packs/js/sdk.js.gz:/app/public/packs/js/sdk.js.gz:ro
+    - ./patches/packs/js/sdk.js.br:/app/public/packs/js/sdk.js.br:ro
+    - ./patches/packs/js/sdk-v2.js:/app/public/packs/js/sdk-v2.js:ro
+    - ./patches/packs/js/sdk-v2.js.gz:/app/public/packs/js/sdk-v2.js.gz:ro
+    - ./patches/packs/js/sdk-v2.js.br:/app/public/packs/js/sdk-v2.js.br:ro
+    - ./app/models/channel/web_widget.rb:/app/app/models/channel/web_widget.rb:ro
   network_mode: host
 
 services:
