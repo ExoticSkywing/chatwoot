@@ -16,6 +16,9 @@ x-base: &base
     - ./patches/packs/js/sdk-v2.js:/app/public/packs/js/sdk-v2.js:ro
     - ./patches/packs/js/sdk-v2.js.gz:/app/public/packs/js/sdk-v2.js.gz:ro
     - ./patches/packs/js/sdk-v2.js.br:/app/public/packs/js/sdk-v2.js.br:ro
+    - ./patches/packs/js/sdk-v3.js:/app/public/packs/js/sdk-v3.js:ro
+    - ./patches/packs/js/sdk-v3.js.gz:/app/public/packs/js/sdk-v3.js.gz:ro
+    - ./patches/packs/js/sdk-v3.js.br:/app/public/packs/js/sdk-v3.js.br:ro
     - ./app/models/channel/web_widget.rb:/app/app/models/channel/web_widget.rb:ro
     - ./config/initializers/sdk_cache_control.rb:/app/config/initializers/sdk_cache_control.rb:ro
   network_mode: host
