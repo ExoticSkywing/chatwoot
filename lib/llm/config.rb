@@ -34,10 +34,16 @@ module Llm::Config
     def configure_ruby_llm
       RubyLLM.configure do |config|
         config.openai_api_key = system_api_key if system_api_key.present?
-        config.openai_api_base = openai_endpoint.chomp('/') if openai_endpoint.present?
+        if openai_endpoint.present?
+          base = openai_endpoint.chomp('/')
+          base = "#{base}/v1" unless base.end_with?('/v1')
+          config.openai_api_base = base
+        end
         config.model_registry_file = Rails.root.join('config/llm_models.json').to_s
         config.logger = Rails.logger
       end
+      registry = RubyLLM.config.model_registry_file
+      RubyLLM.models.load_from_json!(registry) if registry.present? && File.exist?(registry)
     end
 
     def system_api_key

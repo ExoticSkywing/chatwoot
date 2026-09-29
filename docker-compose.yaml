@@ -21,6 +21,8 @@ x-base: &base
     - ./patches/packs/js/sdk-v3.js.br:/app/public/packs/js/sdk-v3.js.br:ro
     - ./app/models/channel/web_widget.rb:/app/app/models/channel/web_widget.rb:ro
     - ./config/initializers/sdk_cache_control.rb:/app/config/initializers/sdk_cache_control.rb:ro
+    - ./config/llm_models.json:/app/config/llm_models.json:ro
+    - ./lib/llm/config.rb:/app/lib/llm/config.rb:ro
   network_mode: host
 
 services:
