@@ -23,6 +23,9 @@ x-base: &base
     - ./config/initializers/sdk_cache_control.rb:/app/config/initializers/sdk_cache_control.rb:ro
     - ./config/llm_models.json:/app/config/llm_models.json:ro
     - ./lib/llm/config.rb:/app/lib/llm/config.rb:ro
+    - ./lib/llm/feature_router.rb:/app/lib/llm/feature_router.rb:ro
+    - ./lib/captain/base_task_service.rb:/app/lib/captain/base_task_service.rb:ro
+    - ./enterprise/app/models/concerns/agentable.rb:/app/enterprise/app/models/concerns/agentable.rb:ro
   network_mode: host
 
 services:
@@ -34,6 +37,7 @@ services:
       - RAILS_ENV=production
       - INSTALLATION_ENV=docker
       - PORT=3150
+      - RACK_TIMEOUT_SERVICE_TIMEOUT=60
     entrypoint: docker/entrypoints/rails.sh
     command: ['bundle', 'exec', 'rails', 's', '-p', '3150', '-b', '0.0.0.0']
     restart: always

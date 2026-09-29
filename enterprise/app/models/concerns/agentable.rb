@@ -9,6 +9,8 @@ module Concerns::Agentable
       instructions: ->(context) { agent_instructions(context, runtime_configuration: runtime_configuration) },
       tools: agent_tools,
       model: agent_model,
+      provider: :openai,
+      assume_model_exists: true,
       temperature: temperature.presence&.to_f || DEFAULT_TEMPERATURE,
       response_schema: agent_response_schema
     )
