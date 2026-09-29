@@ -28,6 +28,7 @@ x-base: &base
     - ./enterprise/app/models/concerns/agentable.rb:/app/enterprise/app/models/concerns/agentable.rb:ro
     - ./enterprise/app/helpers/captain/chat_helper.rb:/app/enterprise/app/helpers/captain/chat_helper.rb:ro
     - ./enterprise/app/services/captain/llm/translate_query_service.rb:/app/enterprise/app/services/captain/llm/translate_query_service.rb:ro
+    - ./enterprise/app/services/captain/open_ai_message_builder_service.rb:/app/enterprise/app/services/captain/open_ai_message_builder_service.rb:ro
   network_mode: host
 
 services:

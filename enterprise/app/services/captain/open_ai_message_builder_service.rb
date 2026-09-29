@@ -45,9 +45,24 @@ class Captain::OpenAiMessageBuilderService
 
   def image_parts(image_attachments)
     image_attachments.each_with_object([]) do |attachment, parts|
-      url = get_attachment_url(attachment)
+      url = get_attachment_data_uri(attachment) || get_attachment_url(attachment)
       parts << image_part(url) if url.present?
     end
+  end
+
+  def get_attachment_data_uri(attachment)
+    return nil unless attachment.file.attached?
+
+    blob = attachment.file.blob
+    content_type = blob.content_type.presence || 'image/png'
+    data = blob.download
+    return nil if data.blank?
+
+    base64 = Base64.strict_encode64(data)
+    "data:#{content_type};base64,#{base64}"
+  rescue StandardError => e
+    Rails.logger.warn "Failed to create data URI for attachment #{attachment.id}: #{e.message}"
+    nil
   end
 
   def get_attachment_url(attachment)
